@@ -2,7 +2,7 @@ import React from 'react'
 import './SearchResults.css'
 import TrackList from './TrackList'
 
-const SearchResults = ({ searchResults }) => {
+const SearchResults = ({ searchResults, onAdd, isRemoval }) => {
     
 
 

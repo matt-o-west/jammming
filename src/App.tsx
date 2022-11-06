@@ -20,11 +20,17 @@ function App() {
     if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return
     }
+    
     setPlaylistTracks([...playlistTracks, track])
   }
 
+  const removeTrack = (track) => {
+    setPlaylistTracks(playlistTracks.filter(savedTrack => savedTrack.id !== track.id))
+  }
+
+
   return (
-    <div>
+    <>
     <h1>Ja<span className="highlight">mmm</span>ing</h1>
     <div className="App">
       <Searchbar />
@@ -32,10 +38,10 @@ function App() {
           {/* <!-- Add a SearchResults component --> */}
           <SearchResults searchResults={searchResults} onAdd={addTrack} isRemoval={isRemoval} />
           {/* <!-- Add a Playlist component --> */}
-          <Playlist playlistName={playlistName} playlistTracks={playlistTracks} searchResults={searchResults} />
+          <Playlist playlistName={playlistName} playlistTracks={playlistTracks} searchResults={searchResults} addTrack={addTrack} removeTrack={removeTrack} />
       </div>
     </div>
-  </div>
+  </>
   )
 }
 
