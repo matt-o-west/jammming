@@ -1,6 +1,8 @@
 import React from 'react'
 
 const token: string = ''
+const client_id: string = '59fee7bd01504b5faead9f4da53bd898'
+const redirect_uri: string = 'http://localhost:3000/'
 
 const Spotify = {
     getAccessToken() {
@@ -14,7 +16,7 @@ const Spotify = {
                 window.history.pushState('Access Token', null, '/')
                 return accessToken
             } else {
-                window.location.href = 'https://accounts.spotify.com/authorize?client_id=CLIENT_ID&response_type=token&scope=playlist-modify-public&redirect_uri=http://localhost:3000/'
+                window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
             }
         }
     }
