@@ -1,0 +1,63 @@
+$background: #eeddffd0;
+$text: #333;
+$button: rgba(108, 65, 233, .7);
+
+body,
+html,
+#root {
+  height: 100%;
+}
+
+html {
+  font-size: 18px;
+}
+
+h1 {
+  padding: .77rem 0;
+  background-color: transparent;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.88rem;
+  color: $text;
+  border: 1px solid black;
+  background-color: $background;
+}
+
+h1 .highlight {
+  color: blueviolet;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.55rem;
+}
+
+.App {
+  height: 100%;
+  width: 100%;
+  padding: 0 17% 10% 17%;
+  background-image: url('../public/background.jpeg');
+  background-color: $background;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+}
+
+.App-playlist {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media only screen and (max-width: 1020px) {
+  .App-playlist {
+    align-items: center;
+    flex-direction: column;
+  }
+}
