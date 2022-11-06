@@ -1,11 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.scss'
 import Searchbar from './Searchbar'
 import SearchResults from './SearchResults'
 import Playlist from './Playlist'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchResults, setSearchResults] = useState([])
+  const [playlistName, setPlaylistName] = useState('New Playlist')
+  const [playlistTracks, setPlaylistTracks] = useState([])
+  const [isRemoval, setIsRemoval] = useState(false)
+
+  useEffect(() => {
+    fetch('https://api.spotify.com/v1/search?q=roadhouse&type=track')
+      .then(response => response.json())
+      .then(data => setSearchResults(data.tracks.items))
+  }, [])
+
+  const addTrack = (track) => {
+    if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return
+    }
+    setPlaylistTracks([...playlistTracks, track])
+  }
 
   return (
     <div>
@@ -14,9 +30,9 @@ function App() {
       <Searchbar />
       <div className="App-playlist">
           {/* <!-- Add a SearchResults component --> */}
-          <SearchResults />
+          <SearchResults searchResults={searchResults} onAdd={addTrack} isRemoval={isRemoval} />
           {/* <!-- Add a Playlist component --> */}
-          <Playlist />
+          <Playlist playlistName={playlistName} playlistTracks={playlistTracks} searchResults={searchResults} />
       </div>
     </div>
   </div>

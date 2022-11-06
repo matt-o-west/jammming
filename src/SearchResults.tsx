@@ -1,11 +1,16 @@
 import React from 'react'
 import './SearchResults.css'
+import TrackList from './TrackList'
 
-const SearchResults = () => {
+const SearchResults = ({ searchResults }) => {
+    
+
+
   return (
     <div className="SearchResults">
   <h2>Results</h2>
-    {/* <!-- You will add a map method that renders a set of Track components  --> */}
+          {/* <!-- You will add a map method that renders a set of Track components  --> */}
+          
 </div>
   )
 }

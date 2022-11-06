@@ -1,10 +1,19 @@
 import React from 'react'
 import './TrackList.css'
+import Track from './Track'
 
-const TrackList = () => {
+const TrackList = ({ searchResults, onAdd }) => {
+    const renderTracks = () => {
+        return searchResults.map((track) => {
+            return <Track track={track} key={track.id} onAdd={onAdd} />
+        })
+    }
+
   return (
     <div className="TrackList">
-    {/* <!-- You will add a map method that renders a set of Track components  --> */}
+          {/* <!-- You will add a map method that renders a set of Track components  --> */}
+            {renderTracks()}
+          
 </div>
   )
 }
