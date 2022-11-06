@@ -1,8 +1,8 @@
 import React from 'react'
 import './Track.css'
 
-const Track = ({ track, addTrack, removeTrack }) => {
-    const isRemoval: boolean = false;
+const Track = ({ track, addTrack, removeTrack, isRemoval }) => {
+    
 
     const renderAction = () => {
         return (<>

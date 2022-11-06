@@ -1,11 +1,23 @@
 import React from 'react'
 import './Searchbar.css'
 
-const Searchbar = () => {
-  return (
+const Searchbar = ({ search }) => {
+  
+    const handleSearch = (event) => {
+        search(event.target.value)
+    }
+
+    const handleKeyPress = (event) => {
+
+        if (event.key === 'Enter') {
+            search(event.target.value)
+        }
+    }
+  
+    return (
     <div className="SearchBar">
-    <input placeholder="Enter A Song, Album, or Artist" />
-    <button className="SearchButton">SEARCH</button>
+            <input placeholder="Enter A Song, Album, or Artist" onChange={handleSearch} />
+    <button className="SearchButton" >SEARCH</button>
   </div>
   )
 }

@@ -2,14 +2,20 @@ import React from 'react'
 import './Playlist.css'
 import TrackList from './TrackList'
 
-const Playlist = ({ playlistName, playlistTracks, searchResults, addTrack, removeTrack }) => {
+const Playlist = ({ playlistName, playlistTracks, searchResults, addTrack, removeTrack, isRemoval, updatePlaylistName, savePlaylist }) => {
+
+    const handleNameChange = (event) => {
+        updatePlaylistName(event.target.value)
+        console.log('playlistName', playlistName)
+    }
+
   return (
-    <div><div className="Playlist">
-    <input value={"New Playlist"}/>
+   <div className="Playlist">
+          <input placeholder={"New Playlist"} onChange={handleNameChange} type='text'/>
           {/*<!-- Add a TrackList component -->*/}
-          <TrackList playlistName={playlistName} playlistTracks={playlistTracks} searchResults={searchResults} addTrack={addTrack} removeTrack={removeTrack} />
-    <button className="Playlist-save">SAVE TO SPOTIFY</button>
-  </div></div>
+          <TrackList playlistName={playlistName} playlistTracks={playlistTracks} searchResults={searchResults} addTrack={addTrack} removeTrack={removeTrack} isRemoval={isRemoval} />
+          <button className="Playlist-save" onClick={savePlaylist} >SAVE TO SPOTIFY</button>
+</div>
   )
 }
 
