@@ -3,6 +3,7 @@ import './App.scss'
 import Searchbar from './Searchbar'
 import SearchResults from './SearchResults'
 import Playlist from './Playlist'
+import Spotify from './utils/Spotify'
 
 function App() {
   const [searchResults, setSearchResults] = useState([])
@@ -10,11 +11,11 @@ function App() {
   const [playlistTracks, setPlaylistTracks] = useState([])
   const [isRemoval, setIsRemoval] = useState(true)
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch('https://api.spotify.com/v1/search?q=roadhouse&type=track')
       .then(response => response.json())
       .then(data => setSearchResults(data.tracks.items))
-  }, [])
+  }, [])*/
 
   const addTrack = (track) => {
     if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -33,17 +34,12 @@ function App() {
   }
 
   const savePlaylist = () => {
-    const trackUris = playlistTracks.map(track => track.uri)
+    Spotify.savePlaylist(playlistName, playlistTracks.map(track => track.uri))
   }
 
   const search = (term: string) => {
     console.log(term)
-    fetch(`https://api.spotify.com/v1/search?q=${term}&type=track`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setSearchResults(data.tracks.items)
-      })
+    Spotify.search(term)
   }
 
   return (

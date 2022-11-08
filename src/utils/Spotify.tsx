@@ -19,6 +19,23 @@ const Spotify = {
                 window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
             }
         }
+    },
+
+    search(term: string) {
+        fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.tracks) {
+                    return []
+                }
+                return data.tracks.items.map(track => ({
+                    id: track.id,
+                    name: track.name,
+                    artist: track.artists[0].name,
+                    album: track.album.name,
+                    uri: track.uri
+                }))
+            })
     }
 }
 
