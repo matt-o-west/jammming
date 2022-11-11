@@ -9,14 +9,16 @@ const Spotify = {
         if (token) {
             return token
         } else {
-            const accessToken = window.location.href.match(/access_token=([^&]*)/)
-            const expiresIn = window.location.href.match(/expires_in=([^&]*)/)
-            if (accessToken && expiresIn) {
-                window.setTimeout(() => accessToken = '', expiresIn * 1000)
+            const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/)
+            const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/)
+            if (accessTokenMatch && expiresInMatch) {
+                const token = accessTokenMatch[1]
+                const expiresIn = Number(expiresInMatch[1])
+                window.setTimeout(() => token = '', expiresIn * 1000)
                 window.history.pushState('Access Token', null, '/')
-                return accessToken
+                return token
             } else {
-                window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=code&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
+                window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
             }
         }
     },
