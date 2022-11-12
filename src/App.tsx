@@ -6,7 +6,7 @@ import Playlist from './Playlist'
 import Spotify from './utils/Spotify'
 
 function App() {
-  const [searchResults, setSearchResults] = useState([])
+  const [searchResults, setSearchResults] = useState([{ name: 'name', artist: 'artist', album: 'album', id: 1, uri: 'uri' }])
   const [playlistName, setPlaylistName] = useState('New Playlist')
   const [playlistTracks, setPlaylistTracks] = useState([])
   const [isRemoval, setIsRemoval] = useState(true)
@@ -37,16 +37,20 @@ function App() {
     Spotify.savePlaylist(playlistName, playlistTracks.map(track => track.uri))
   }
 
-  const search = (term: string) => {
-    console.log(term)
+  const search = async (term: string) => {
+    //console.log(term)
     Spotify.search(term)
+      .then(tracks => {
+        console.log(tracks)
+        setSearchResults(tracks)
+      })
   }
 
   return (
     <>
     <h1>Ja<span className="highlight">mmm</span>ing</h1>
     <div className="App">
-        <Searchbar search={search} />
+        <Searchbar search={search} searchResults={searchResults} />
       <div className="App-playlist">
           {/* <!-- Add a SearchResults component --> */}
           <SearchResults searchResults={searchResults} onAdd={addTrack} isRemoval={isRemoval} />

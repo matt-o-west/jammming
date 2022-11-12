@@ -2,12 +2,14 @@ import React from 'react'
 import './SearchResults.css'
 import TrackList from './TrackList'
 
-const SearchResults = ({ searchResults, onAdd, isRemoval }) => {
-    const renderSearchResults = () => {
-        return searchResults.map((track) => {
-            return <TrackList track={track} key={track.id} onAdd={onAdd} isRemoval={isRemoval} />
-        })
+const SearchResults = ({ searchResults = [], onAdd, isRemoval }) => {
+  const renderSearchResults = () => {
+    if (searchResults.length > 0) {
+      return <TrackList searchResults={searchResults} addTrack={onAdd} isRemoval={isRemoval} />
+    } else {
+      return <p>No results</p>
     }
+}
 
 
   return (

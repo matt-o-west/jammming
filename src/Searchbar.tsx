@@ -1,18 +1,30 @@
 import React from 'react'
 import './Searchbar.css'
+import { useRef, useEffect } from 'react'
 
 const Searchbar = ({ search }) => {
-    
+  const searchInput = useRef('')
   
-    const handleSearch = (event) => {
+
+  useEffect(() => {
+    searchInput.current.focus()
+  }, [])
+
+  /*const handleSearch = (event) => {
         search(event.target.value)
-    }
+  }*/
+  
+  const handleSubmit = async (event) => {
+      event.preventDefault()
+    const results = await search(searchInput.current.value)
+    return results
+  }
   
     return (
-    <div className="SearchBar" >
-    <input placeholder="Enter A Song, Album, or Artist" onChange={handleSearch} />
-    <button className="SearchButton" >SEARCH</button>
-  </div>
+    <form className="SearchBar" onSubmit={handleSubmit}>
+        <input placeholder="Enter A Song, Album, or Artist" ref={searchInput} />
+    <button className="SearchButton" type="submit" value="search">SEARCH</button>
+  </form>
   )
 }
 

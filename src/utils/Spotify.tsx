@@ -1,8 +1,8 @@
 import React from 'react'
 
-const token: string = ''
+let token = ''
 const client_id: string = '59fee7bd01504b5faead9f4da53bd898'
-const redirect_uri: string = 'http://localhost:3000/'
+const redirect_uri: string = 'http://localhost:5173/'
 
 const Spotify = {
     getAccessToken() {
@@ -12,19 +12,26 @@ const Spotify = {
             const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/)
             const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/)
             if (accessTokenMatch && expiresInMatch) {
-                const token = accessTokenMatch[1]
+                let token = accessTokenMatch[1]
                 const expiresIn = Number(expiresInMatch[1])
                 window.setTimeout(() => token = '', expiresIn * 1000)
                 window.history.pushState('Access Token', null, '/')
                 return token
             } else {
-                window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
+                const accessURL = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
+                window.location.href = accessURL
             }
         }
     },
 
-    search(term: string) {
-        fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`)
+    async search(term: string) {
+        const accessToken = this.getAccessToken()
+
+        return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -42,12 +49,12 @@ const Spotify = {
             })
     },
 
-    savePlaylist(name: string, trackUris: string[]) {
+    async savePlaylist(name: string, trackUris: string[]) {
         if (!name || !trackUris.length) {
             return
         }
 
-        const accessToken = Spotify.getAccessToken()
+        const accessToken = this.getAccessToken()
         const headers = { Authorization: `Bearer ${accessToken}` }
         let userId: string
 
