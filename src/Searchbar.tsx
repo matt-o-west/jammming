@@ -2,7 +2,7 @@ import React from 'react'
 import './Searchbar.css'
 import { useRef, useEffect } from 'react'
 
-const Searchbar = ({ search }) => {
+const Searchbar = ({ search, handleSearch }) => {
   const searchInput = useRef('')
   
 
@@ -22,7 +22,7 @@ const Searchbar = ({ search }) => {
   
     return (
     <form className="SearchBar" onSubmit={handleSubmit}>
-        <input placeholder="Enter A Song, Album, or Artist" ref={searchInput} />
+        <input placeholder="Enter A Song, Album, or Artist" ref={searchInput} onChange={handleSearch} />
     <button className="SearchButton" type="submit" value="search">SEARCH</button>
   </form>
   )

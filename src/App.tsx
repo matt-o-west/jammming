@@ -10,12 +10,8 @@ function App() {
   const [playlistName, setPlaylistName] = useState('New Playlist')
   const [playlistTracks, setPlaylistTracks] = useState([])
   const [isRemoval, setIsRemoval] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
 
-  /*useEffect(() => {
-    fetch('https://api.spotify.com/v1/search?q=roadhouse&type=track')
-      .then(response => response.json())
-      .then(data => setSearchResults(data.tracks.items))
-  }, [])*/
 
   const addTrack = (track) => {
     if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -37,20 +33,28 @@ function App() {
     Spotify.savePlaylist(playlistName, playlistTracks.map(track => track.uri))
   }
 
-  const search = async (term: string) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    setSearchTerm(event.target.value)
+  }
+
+  const search = (term: string) => {
     //console.log(term)
-    Spotify.search(term)
+    Spotify.search(searchTerm)
       .then(tracks => {
         console.log(tracks)
         setSearchResults(tracks)
       })
+      .finally(() => {
+        setSearchTerm(term)
+      }) 
   }
 
   return (
     <>
     <h1>Ja<span className="highlight">mmm</span>ing</h1>
     <div className="App">
-        <Searchbar search={search} searchResults={searchResults} />
+        <Searchbar search={search} searchResults={searchResults} handleSearch={handleSearch} />
       <div className="App-playlist">
           {/* <!-- Add a SearchResults component --> */}
           <SearchResults searchResults={searchResults} onAdd={addTrack} isRemoval={isRemoval} />
