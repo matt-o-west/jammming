@@ -6,18 +6,24 @@ const redirect_uri: string = 'http://localhost:5173/'
 
 const Spotify = {
     getAccessToken() {
+        let token = window.localStorage.getItem('token')
+
         if (token) {
+
             return token
         } else {
             //check for access token match
             const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/)
             const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/)
             const refreshToken = window.location.href.match(/refresh_token=([^&]*)/)
+
             if (accessTokenMatch && expiresInMatch) {
                 let token = accessTokenMatch[1]
                 const expiresIn = Number(expiresInMatch[1])
                 window.setTimeout(() => token = '', expiresIn * 1000)
                 window.history.pushState('Access Token', null, '/')
+                window.localStorage.setItem('token', token)
+
                 return token
             } else {
                 const accessURL = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
