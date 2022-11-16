@@ -13,6 +13,10 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
 
 
+  
+  
+  
+
   const addTrack = (track) => {
     if (playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return

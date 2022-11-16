@@ -1,6 +1,6 @@
 import React from 'react'
 
-let token = ''
+let token: string = ''
 const client_id: string = '59fee7bd01504b5faead9f4da53bd898'
 const redirect_uri: string = 'http://localhost:5173/'
 
@@ -9,8 +9,10 @@ const Spotify = {
         if (token) {
             return token
         } else {
+            //check for access token match
             const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/)
             const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/)
+            const refreshToken = window.location.href.match(/refresh_token=([^&]*)/)
             if (accessTokenMatch && expiresInMatch) {
                 let token = accessTokenMatch[1]
                 const expiresIn = Number(expiresInMatch[1])
