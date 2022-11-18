@@ -6,7 +6,6 @@ const redirect_uri: string = 'http://localhost:5173/'
 
 const Spotify = {
     getAccessToken() {
-        let token = window.localStorage.getItem('token')
 
         if (token) {
 
@@ -22,7 +21,6 @@ const Spotify = {
                 const expiresIn = Number(expiresInMatch[1])
                 window.setTimeout(() => token = '', expiresIn * 1000)
                 window.history.pushState('Access Token', null, '/')
-                window.localStorage.setItem('token', token)
 
                 return token
             } else {
