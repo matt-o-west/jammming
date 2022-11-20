@@ -16,12 +16,8 @@ function App() {
   const client_id: string = '59fee7bd01504b5faead9f4da53bd898'
   const redirect_uri: string = 'http://localhost:5173/'
 
-  /*useEffect(() => {
-    const accessToken = getAccessToken()
-    setToken(accessToken)
-  }, [])*/
-
   function getAccessToken() {
+
     if (token) {
         return token
     } else {
@@ -34,8 +30,8 @@ function App() {
             let token = accessTokenMatch[1]
             const expiresIn = Number(expiresInMatch[1])
             window.setTimeout(() => token = '', expiresIn * 1000)
-            window.history.pushState('Access Token', null, '/')
-            setToken(token)
+          window.history.pushState('Access Token', null, '/')
+          window.localStorage.setItem('token', token)
             return token
         } else {
             const accessURL = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirect_uri}`
